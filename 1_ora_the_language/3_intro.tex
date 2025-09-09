@@ -1,0 +1,50 @@
+
+\szakasz[Intro]{Introduction}
+
+\begin{frame}[t]
+\frametitle{Brief history}
+\begin{itemize}
+\item[1972] Marseille (PROgramming in LOGic)
+\item[1978] PROLOG interpreter
+\item[1987] SWI (free; online \& downloadable -- has better debugger). \[\prolog \defegy \textup{\textsc{swi prolog} interpreter}\]
+\item[1987] Jaffar and Lassez: Constraint logic programming. Powerful and beautiful clp packages are included since.
+\item[1990] SICStus Prolog (proprietary)
+\end{itemize}
+
+Used at\dots
+\begin{itemize}
+\item Watson -- Q\&A machine of IBM e.g. cancer
+\item NASA -- international space station (Clarissa)
+\item Ericsson -- Network Resource Manager (operator assistant)
+\item Logistics
+\item Data mining -- Rule Discovery System (RDS)
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Declarative, logic programming}
+\vspace{.5cm}
+
+\textbf{Declarative programming:} define \textbf{what} to solve, not \textbf{how} to solve it.
+
+\bigskip
+
+We describe the problem (instead of the way to the solution -- algorithms), the program solves it using it's own strategies (e.g. backtracking)
+
+\bigskip
+\bigskip
+\textbf{Logic programming:} syntax follows the syntax of logic (Horn logic).
+
+\hspace{.8cm} Program: logical formula(s)
+
+\hspace{.8cm} Running the program: evaluation of the formula(s)
+
+\hspace{.8cm} No classical variables (temporal substitution vs assignment)
+
+\hspace{.8cm} Recursion instead of loops
+
+\begin{tikzpicture}
+\node[overlay, rotate = 30] at (11,-2){\includegraphics[scale=.5]{prologlogo.png}};
+\end{tikzpicture}
+\end{frame}

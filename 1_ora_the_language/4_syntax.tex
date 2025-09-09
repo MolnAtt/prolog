@@ -1,0 +1,227 @@
+
+\szakasz[Syntax]{Syntax}
+
+
+
+\begin{frame}[t]
+\frametitle{Language elements}
+\framesubtitle{Constants}
+	\begin{itemize}
+		\item Atoms
+			\begin{itemize}
+			\item \footnotesize String beginning with lower case letter
+            \begin{center} \ol{dEPARTMENT},\quad \ol{logic},\quad \ol{l\_o\_g\_i\_c},\quad \ol{year1988}\end{center}
+			\item \footnotesize String in single quotes
+\begin{center}
+  \ol{'Mekis'}, \quad \ol{'\_String'},\quad  \ol{'WHAT3V3R'}
+\end{center}
+%			\item String of special characters \ol{;}, \ol{:-}
+			\end{itemize}
+		\item Numbers: usual\dots
+\begin{center} \ol{-1}, \ol 0, \ol 1, \ol 2,\dots, integers, floats\dots\end{center}
+	\end{itemize}
+	
+	\begin{tikzpicture}
+\node[overlay, rotate = -30] at (-1,-2){\includegraphics[scale=.8]{prologlogo.png}};
+\end{tikzpicture}
+\end{frame}
+
+
+
+\begin{frame}[t]
+\frametitle{Language elements}
+\framesubtitle{Variables}
+		\begin{itemize}
+		\item String starting with upper case letter
+            \begin{center}\ol{Mekis}, \quad \ol{YOLO},\quad \ol{L\_AbamBA} \end{center}
+		\item String starting with
+            \begin{center}\ol{\_},\quad \ol{\_logic},\quad \ol{\_LoL} \end{center}
+		\end{itemize}
+The variable \ol{\_} is very special, \prolog will treat it differently!
+
+(The string cannot contain any \ol{(}, \ol{)} or \ol{~}.)
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Exercise}
+
+Which of the following sequences of characters are \textbf{atom}s, which are \textbf{variable}s, and which are \textbf{neither}?
+\vspace{1cm}
+
+\centering
+\begin{tabular}{ll}
+\ol{thisiaVariable} & \pause atom \\
+\ol{ELTE} & \pause variable \\
+\ol{this\_is\_a\_Variable} & \pause atom \\
+\ol{’\_John} & \pause neither \\
+\ol{'John loves Mary'} & \pause atom \\
+\ol{prolog2017}  & \pause atom \\
+\ol{Nimbus2000} & \pause variable \\
+\ol{John loves Mary} & \pause neither \\
+\ol{\_John} & \pause variable \\
+\ol{'John'} & \pause atom \\
+\end{tabular}
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Language elements}
+\framesubtitle{Terms}
+\begin{itemize}
+\item Constants and variables are \textbf{terms}.
+\item If $\ml f$ is an atom and \ml{$\tau_1$}, \dots, \ml{$\tau_n$} are \textbf{terms}, then
+\[\ml f \ol{(}\ml {$\tau_1$} \ol{,} \ml{$\tau_2$} \ol , \ml{\dots} \ol ,\ml{$\tau_n$}\ol{)}  \]
+is a (complex) \textbf{term}.
+
+\[\ol{grandmotherof(X,motherof(fatherof(Y)))}\]
+
+The number of contained terms are called the arities of the function/functor/predicate $\ml f$. In \textsc{prolog}, if $\ml f$ is a ternary function we refer to that in the following way: $\ml f \ol{/3}$. This will be very important, because it is not uncommon in \textsc{prolog} to use different functions such as $\ml f /2$ , $\ml f/3$ and $\ml f /5$ in a parallel way. We will never do that though.
+\end{itemize}
+
+	\begin{tikzpicture}
+\node[overlay, rotate = 180] at (11,6.9){\includegraphics[scale=.4]{prologlogo.png}};
+\end{tikzpicture}
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Exercise}
+
+ Which of the following sequences of characters are \textbf{atom}s, which are \textbf{variable}s, which are \textbf{complex term}s, and which are \textbf{not term}s at all? Give the functor and arity of each complex term.
+ \vspace{1cm}
+
+\centering
+\begin{tabular}{ll}
+\ol{’loves(Vincent,Mia)’} & \pause atom \\
+\ol{loves(Vincent  Mia)}  & \pause not term \\
+\ol{or(super(M),bat(M))} & \pause complex term (or/2, super/1, bat/1) \\
+\ol{Butch(boxer)} & \pause neither \\
+\ol{boxer(Butch)} & \pause complex term (butch/1) \\
+\ol{beats(Batman,'Superman')} & \pause complex term (butch/2) \\
+\ol{\_or(Super(M),Bat(M))}  & \pause neither \\
+\ol{or(super(man),bat(man))} & \pause complex term (or/2, super/1, bat/1)\\
+\ol{(Batman  beats  Superman)}  & \pause not term \\
+\ol{loves(Vincent,Mia}  & \pause not term \\
+\end{tabular}
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Language elements}
+\framesubtitle{Connectives}
+
+\normalsize
+\centering
+\vspace{1cm}
+
+\begin{tabular}{cc}
+and & , \\
+& \\
+or & ; \\
+& \\
+if & :- \\
+& \\
+not & $\setminus$+
+\end{tabular}
+
+\bigskip
+The ``not'' $\setminus$+ is \textbf{NOT} the negation you think of! Do not use it until we learn it how to use. It modifies the searching algorithm of \prolog, and as such it is not a declarative command!
+
+%\begin{tikzpicture}
+%    \node[overlay] at (5,1){\includegraphics[scale=.7]{prologlogo.png}};
+%\end{tikzpicture}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Facts, rules and knowledge base}
+If $\tau$ is a term \emph{that does not contain any variable}, then $\ml{$\tau$}\ol{.}$ is a \textbf{fact}. (Ending dot!)
+
+\[\ol{loves(adam, motherof('Cain')).}\]
+
+\begin{itemize}
+\item If \ml{$\sigma$} and \ml{$\tau$} are terms, then \ml{$\sigma$}\ol\ha\ml{$\tau$}\ol{.} is \textbf{a rule}. \hfill (if)
+\item If \ml{$\varrho$}\ol{.} is a \textbf{rule} and \ml{$\tau$} is a term, then \ml{$\varrho$}\ol{,}\ml{$\tau$}\ol{.} is a \textbf{rule} as well. \hfill(and)
+%\item If \ml{$\varrho$} is a \textbf{rule} and \ml{$\tau$} is a term, then \ml{$\varrho$}\ol{;}\ml{$\tau$} is a \textbf{rule} as well. \hfill(or)
+\end{itemize}
+
+\[\ol{jealous(X, Y):-loves(X, Z),loves(Y, Z).}\]
+\[\begin{array}{ll}
+    \ol{jealous(\_loverNo1, \_loverNo2) :-}
+        & \ol{loves(\_loverNo1, LovedOne),}
+    \\  & \ol{loves(\_loverNo2, LovedOne).}\end{array}\]
+
+(spaces and breaks do not matter)
+
+\textbf{A knowledge base is a collection of facts and rules.}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Knowledge bases}
+A \textbf{knowledge base} is collection of facts and rules.
+
+\vfill
+
+\noindent \ol{loves(vincent, mia).}
+\\\ol{loves(marcellus, mia).}
+\\\ol{loves(pumpkin, honey\_bunny).}
+\\\ol{loves(honey\_bunny, pumpkin).}
+\\\ol{jealous(X, Y) :- loves(X, Z),loves(Y, Z).}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Queries / proof searches}
+
+\begin{tabular}{l}
+\ol{loves(vincent, mia).}
+\\\ol{loves(marcellus, mia).}
+\\\ol{loves(pumpkin, honey\_bunny).}
+\\\ol{loves(honey\_bunny, pumpkin).}
+\\\ol{jealous(X, Y) :- loves(X, Z),loves(Y, Z).}
+\\\hline
+ \ol{jealous(X, Y).}
+\\ \ml{and \prolog~will answer that...}
+\end{tabular}
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Exercise}
+
+Translate the following rules into English (natural language)!
+\vspace{.3cm}
+
+\begin{tabular}{ll}
+\textup{\ol{man('Eomund').}} & \textup{\ol{man('Eomer').}}\\
+\textup{\ol{woman('Theodwyn').}} & \textup{\ol{woman('Eowyn').}}\\
+\textup{\ol{son('Eomer', 'Eomund').}} & \textup{\ol{son('Eomer', 'Theodwyn').}} \\
+\textup{\ol{daughter('Eowyn', 'Eomund').}} & \textup{\ol{daughter('Eowyn', 'Theodwyn').}}
+\end{tabular}
+\pause
+\vspace{.3cm}
+
+
+\ol{father(X,Y):- man(X), son(Y,X).}\\
+\ol{father(X,Y):- man(X), daughter(Y,X).}\\
+\pause
+\ol{mother(X,Y):- woman(X), son(Y,X).}\\
+\ol{mother(X,Y):- woman(X), daughter(Y,X).}\\
+\pause
+\ol{parent(X):- father(X,\_); mother(X,\_).}\\
+\ol{parent(X,Y):- father(X,Y); mother(X,Y).}\\
+\pause
+\ol{sister(Y,Z):-parent(X),daughter(Y,X),daughter(Z,X),Z$\setminus$=Y.}\\
+\ol{sister(Y,Z):- parent(X), daughter(Y,X), son(Z,X).}\\
+\ol{brother(Y,Z):- parent(X), son(Y,X), son(Z,X), Z$\setminus$=Y.}\\
+\ol{brother(Y,Z):- parent(X), son(Y,X), daughter(Z,X).}\\
+\pause
+\ol{sibling(X,Y):- brother(X,Y); sister(X,Y).}\\
+\pause
+\ol{ancestor(X,Y):- parent(X,Y).}\\
+\ol{ancestor(X,Y):- parent(X,Z), ancestor(Z,Y).}\\
+
+\end{frame}

@@ -1,0 +1,50 @@
+
+\szakasz[Horn-clauses]{Horn clauses}
+\begin{frame}[t]
+\frametitle{Horn clauses in propositional logic}
+\begin{defi}
+  A \cemph{literal} is an atomic sentence or a negation of an atomic sentence.
+    \[p, q, \dots, \lnot p, \lnot q, \dots \]
+\end{defi}
+\begin{defi}
+  A \cemph{clause} is a disjunction of literals
+  \[p\lor q\lor \lnot p\lor \lnot r\lor q\]
+\end{defi}
+\begin{defi}
+  A \cemph{Horn clause} is a clause with \textbf{at most one} positive (unnegated) literals in it.
+  \[\lnot p\lor \lnot q\lor \lnot p\lor \lnot r\lor q\]
+\end{defi}
+Remember that $\lnot A \lor B \iff A\lthen B$, therefore Horn clauses are sentences of form
+$(p_1\land p_2\land \dots \land p_n) \lthen q$ or $p_1\lthen (p_2\lthen \dots \lthen (p_n \lthen q)\dots )$
+And these sentences are very convenient to apply modus ponens\dots
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Horn clauses in propositional logic}
+\begin{tete}
+The satisfiability problem of a conjunction of Horn clauses is \textbf{P-complete} and solvable in \textbf{linear time}.
+\end{tete}
+i.e., Horn-logic is super fast.
+
+The cost is of course the expressive power. To use Horn-logic to solve problems the working logician sometimes has to be very tricky in choosing the primitives\dots
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Horn clauses in predicate logic}
+
+In predicate logic, atomic sentences are predicates that may contain variables.
+\[  \textup{human}(x)\lthen \textup{mortal}(x) \]
+All unquantified sentences are meant to be universally quantified (check the definition of $\mathfrak M \models \varphi$ compared to $\mathfrak M, \sigma \models \varphi$ !)
+\[  \forall x (\textup{human}(x)\lthen \textup{mortal}(x)) \]
+
+The only way to play with the variables is to sometimes use the same variable again. The key to thinking in that logic is the so-called unification.
+
+Within a first-order environment, Horn logic gains so much expressive power that it torpedos P-completeness; the satisfiabilty problem of conjunction of Horn clauses is undecidable.
+
+\begin{tikzpicture}
+\node[overlay, rotate = 180] at (10,4.55){\includegraphics[scale=.27]{prologlogo.png}};
+\end{tikzpicture}
+
+\end{frame}

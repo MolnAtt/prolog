@@ -1,0 +1,4 @@
+\beamer@sectionintoc {1}{Intro}{4}{0}{1}
+\beamer@sectionintoc {2}{Syntax}{7}{0}{2}
+\beamer@sectionintoc {3}{Horn-clauses}{44}{0}{3}
+\beamer@sectionintoc {4}{Unification}{48}{0}{4}

@@ -1,0 +1,46 @@
+
+\szakasz[Unification]{Unification}
+
+\begin{frame}[t]
+\frametitle{Unification: =/2}
+
+This is not equality. Equality is \ol{==/2}. Roughly:
+\begin{center}
+  ,,\emph{Two terms unify if they are the same term or if they contain variables that \textbf{can be} uniformly instantiated with terms in such a way that the resulting terms are equal.}''
+\end{center}
+Semantics of =/2.
+\begin{itemize}
+    \item Constants: \ml{a}\ol{=}\ml{b} is true iff they are the same atom or the same number, i.e., \ml{a}\ml{=}\ml{b}.
+    \item Variable + Term: \ml{X}\ol{=}\ml{$\tau$} is true, and \ml{$X\mapsto \tau$}. ($\mapsto$: variable instantiation)
+    \item Term + Variable: Similarly.
+    \item Complex terms: \ml{$\sigma$}\ol{(}\ml{$\tau_1$}\ol{,} \ml{\dots} \ol{,} \ml{$\tau_n$}\ol{)}$ \ol{=} \ml{$\sigma'$}\ol{(}\ml{$\tau_1'$}\ol{,} \ml{\dots} \ol{,} \ml{$\tau_k'$}\ol{)}$ is true iff
+    \begin{itemize}\footnotesize
+      \item \ml{$\sigma=\sigma'$}, \ml{$n=k$}, \item \ml{$(\forall i\leq n) \tau_i = \tau_i'$}, and
+      \item the \textbf{variable instantiations are compatible}.
+      \ml{$X\mapsto a, X\mapsto b \implies a=b$}
+      (,,For example, it is not possible to instantiate variable X to mia when unifying one pair of arguments, and to instantiate X to vincent when unifying another pair of arguments.'')
+    \end{itemize}
+ \end{itemize}
+ \textbf{Unification is intensional!}
+ %Evaluation of a sentence containing =/2 is called \textbf{unification process}.
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Excercises (see lpn 2.1)}
+The symbol \ol{?-}\ml{$\varphi$} is true iff \prolog finds a way to make $\varphi$ true. Later we will see what is the backtracking algorithm that \prolog uses.
+\begin{enumerate}
+\item \ol{?-  mia = mia.} \valasz \ol{yes}
+\item \ol{?-  mia = vincent.} \valasz \ol{yes}
+\item \ol{?-  2 = 2.} \valasz \ol{yes}
+\item \ol{?-  'mia' = mia.} \valasz \ol{yes}
+\item \ol{?-  '2' = 2.} \valasz \ol{no}
+\item \ol{?-  mia = X.} \valasz \ol{X  =  mia\qquad yes}
+\item \ol{?-  X = Y.} \valasz \ol{X  =  \_5071\qquad Y  =  \_5071 \qquad yes}
+\item \ol{?-  X  =  mia,  X  =  vincent.} \valasz \ol{no}
+\\ \hfill \emph{,,An instantiated variable isn’t really a variable anymore: it has become what it was instantiated with.''}
+\item \ol{?-  k(s(g),Y)  =  k(X,t(k)).} \valasz \ol{   X  =  s(g)\quad    Y  =  t(k)\quad yes}
+\item \ol{?-  k(s(g), t(k))  =  k(X,t(Y)).} \valasz \ol{   X  =  s(g)\quad    Y  =  k\quad yes}
+\item \ol{?-  loves(X,X)  =  loves(marcellus,mia).} \valasz \ol{no}
+\end{enumerate}
+\end{frame}
