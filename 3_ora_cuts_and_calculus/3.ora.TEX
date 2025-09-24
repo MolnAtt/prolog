@@ -1,0 +1,1249 @@
+ \documentclass[xcolor=x11names]{beamer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  This Beamer template was created by Cameron Bracken.
+%%  Anyone can freely use or modify it for any purpose
+%%  without attribution.
+%%
+%%  Last Modified by C. Bracken: January 9, 2009
+%%
+%%  The preamble, and maybe some modification of the Cameron Bracken's template is due to Attila Molnár.
+%%
+%%
+
+%% General document
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+%\usepackage{verbatim}
+\usepackage{tikz}
+\usetikzlibrary{decorations.fractals}
+\usetikzlibrary{decorations.text}
+\usepgflibrary{arrows}
+\usetikzlibrary{fadings}
+\usetikzlibrary[decorations.pathmorphing]
+\tikzfading[name=fade inside, inner color=transparent!70, outer color=transparent!70]
+\usetikzlibrary{calc}
+\usetikzlibrary{intersections}
+\usetikzlibrary{shapes}
+\usetikzlibrary{patterns}
+\usefonttheme{serif}
+\usepackage{amssymb} 			
+\usepackage{amsmath}
+\usepackage{ifthen}
+\usepackage[normalem]{ulem}
+\usepackage{mathrsfs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Beamer Layout %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\useoutertheme[subsection=false,shadow]{miniframes}
+\useinnertheme{default}
+\usefonttheme{serif}
+%\usepackage{txfonts} %Hook for strict implication!
+\DeclareSymbolFont{symbolsC}{U}{txsyc}{m}{n}
+\DeclareMathSymbol{\strictif}{\mathrel}{symbolsC}{74}
+\DeclareMathSymbol{\boxright}{\mathrel}{symbolsC}{128}
+\usepackage{palatino}
+%\usepackage[uppercase=upright,charter]{mathdesign}
+
+\setbeamerfont{title like}{shape=\scshape}
+\setbeamerfont{frametitle}{shape=\scshape}
+
+
+\setbeamercolor*{lower separation line head}{bg=white!40!DeepSkyBlue3}
+\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{alerted text}{fg=red}
+\setbeamercolor*{example text}{fg=black}
+\setbeamercolor*{structure}{fg=black}
+
+\setbeamercolor*{palette tertiary}{fg=black,bg=white!90!DeepSkyBlue3}
+\setbeamercolor*{palette quaternary}{fg=black,bg=black!10}
+
+%\setbeamercolor{block body alerted}{bg=normal text.bg!90!DeepSkyBlue4}
+\setbeamercolor{block body}{bg=normal text.bg!95!DeepSkyBlue3}
+%\setbeamercolor{block body example}{bg=normal text.bg!90!DeepSkyBlue4}
+%\setbeamercolor{block title alerted}{use={normal text,alerted text},fg=alerted text.fg!75!normal text.fg,bg=normal text.bg!90!DeepSkyBlue4}
+\setbeamercolor{block title}{bg=normal text.bg!70!DeepSkyBlue3}
+%\setbeamercolor{block title example}{use={normal text,example text},fg=example text.fg!75!normal text.fg,bg=normal text.bg!75!DeepSkyBlue4}
+
+\setbeamertemplate{blocks}[rounded][shadow=true]
+%\setbeamertemplate{background canvas}[vertical shading][bottom=white,top=structure.fg!25]
+%\setbeamertemplate{sidebar canvas left}[horizontal shading][left=white!40!black,right=black]
+\setbeamertemplate{itemize items}[circle]
+\setbeamercolor*{itemize item}{fg=DeepSkyBlue3}
+\setbeamercolor*{itemize subitem}{fg=DeepSkyBlue3}
+\setbeamercolor*{itemize subsubitem}{fg=DeepSkyBlue3}
+\setbeamertemplate{enumerate items}[circle]
+%\setbeamercolor{item projected}{bg=DeepSkyBlue3,fg=black}
+\setbeamercolor{item projected}{bg=white,fg=DeepSkyBlue3}
+\setbeamercolor*{enumerate item}{fg=DeepSkyBlue3}
+\setbeamercolor*{enumerate subitem}{fg=DeepSkyBlue3}
+\setbeamercolor*{enumerate subsubitem}{fg=DeepSkyBlue3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{defi}[1][]{\begin{block}{\footnotesize \textsc{Definition} \ifthenelse{\equal{#1}{}}{}{\, (#1)}}}{\end{block}}
+\newenvironment{prop}[1][]{\begin{block}{\footnotesize \textsc{Proposition} \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{lemm}[1][]{\begin{block}{\footnotesize \textsc{Lemma} \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{idea}[1][]{\begin{block}{\footnotesize \textsc{Idea} \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{rema}[1][]{\begin{block}{\footnotesize \textsc{Remark} \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{coro}[1][]{\begin{block}{\footnotesize \textsc{Corollary} \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{tete}[1][]{\begin{block}{\footnotesize \textsc{Theorem} \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{claim}[1][]{\begin{block}{Claim \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+%\newenvironment{lemma}[1][]{\begin{block}{Lemma \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{question}[1][]{\begin{block}{Question \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{rem}[1][]{\begin{block}{Remark \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{homework}[1][]{\begin{block}{Homework \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+\newenvironment{proo}[1][]{\begin{block}{\footnotesize \textsc{Proof} \ifthenelse{\equal{#1}{}}{}{\, (\textsc{#1})}}}{\end{block}}
+
+%%%%%%%%%%%%%%%%%%%%%
+%% To evade unnecessary circles, mainly for \cimdia
+%%%%%%%%%%%%%%%%%%%%%
+
+\makeatletter
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}% does not happen normally
+  {%else
+    % removed \addtocontents commands
+    \clearpage\beamer@notesactions%
+  }
+}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% END %%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%% Formatting Commands
+
+\newcommand{\cimdia}[1] {\miniframesoff \begin{frame}\begin{center}\huge \begin{tabular}{c}#1\end{tabular}\end{center}\end{frame}\miniframeson}
+\newcommand{\szakasz}[2][]{\section{#1}\subsection{}\cimdia{#2}}
+\newcommand{\bluebullet}{\textcolor{DeepSkyBlue3}{\quad $\bullet$} \,\,}
+
+\newenvironment{frame*}[1][]{\miniframesoff \begin{frame} #1}{\end{frame}\miniframeson}
+
+  % for admissible intersections
+  \newcommand{\bigsqcap}{\rotatebox[origin=c]{180}{$\bigsqcup$}}
+
+\newcommand{\pecset}[2]{\begin{tikzpicture}[remember picture,overlay]
+\node [ draw=red, rectangle, rounded corners=5mm, inner sep=1mm, ultra thick, fill=white, fill opacity=.8, rotate=30, scale=#1, text opacity=0.7] at (current page.center)
+{#2};\end{tikzpicture}}
+
+\newcommand{\felirat}[7][]{\begin{tikzpicture}[remember picture,overlay]
+\node [draw=DeepSkyBlue3, rectangle, rounded corners=#3 mm, inner sep=#2mm, ultra thick, fill=white, fill opacity=.8, scale=#4, text opacity=1,#1]
+at ([xshift=#5 cm, yshift=#6 cm]current page.center) {#7};
+\end{tikzpicture}}
+
+\newcommand{\nobfelirat}[7][]{\begin{tikzpicture}[remember picture,overlay]
+\node [rectangle, rounded corners=#3 mm, inner sep=#2mm, ultra thick, fill=white, fill opacity=.8, scale=#4, text opacity=1,#1]
+at ([xshift=#5 cm, yshift=#6 cm]current page.center) {#7};
+\end{tikzpicture}}
+
+\newcommand{\hazi}[8][]{\begin{tikzpicture}[remember picture,overlay]
+\node [ draw=Coral1,
+        rectangle,
+        rounded corners=#3 mm,
+        inner sep=#2mm,
+        ultra thick,
+        fill=white,
+        fill opacity=.8,
+        rotate=0,
+        scale=#4,
+        text opacity=1, #1]
+        at ([xshift=#5 cm, yshift=#6 cm]current page.center)
+        {\begin{minipage}{#7}#8\end{minipage}};
+\end{tikzpicture}}
+
+\newcommand{\underconstruction}[1]{\begin{tikzpicture}[remember picture,overlay]
+\node [rectangle, rounded corners=5mm, inner sep=1mm, rotate=30, scale=#1, text opacity=0.4]at (current page.center){\textsc{\textcolor{orange}{\begin{tabular}{c}under
+\\construction\end{tabular}}}};
+\end{tikzpicture}}
+\newcommand{\dzsa}[1]{\textsc{\underline{#1}}:}
+\newcommand{\axiom}[1]{\bemph{(\mathrm{#1})}}
+
+
+
+% Emphasizing:
+\definecolor{barna}{rgb}{0.5,0.2,0.1}
+\newcommand{\bemph}[1] {{\color{DeepSkyBlue3}{#1}}}
+\newcommand{\kemph}[1] {{\color{blue}{#1}}}
+\newcommand{\cemph}[1]{\textcolor{red}{#1}}
+\newcommand{\zemph}[1] {{\color{Green2}{#1}}}
+\newcommand{\yemph}[1] {{\color{Orange1}{#1}}}
+%\renewcommand{\emph}[1]{\textbf{#1}}
+
+\renewcommand{\Diamond}{\scalebox{.9}{\raisebox{-.4ex}{\rotatebox{45}{$\Box$}}}}
+
+ \newcommand{\vonal} [1][.2]{\hspace{#1cm} | \hspace{#1cm}}
+
+ \newcommand{\lrule}[3][c]{\begin{array}{#1} #2  \\  \hline #3 \end{array}}
+ \newcommand{\dlrule}[3][c]{\begin{array}{#1} #2  \\  \hline\hline #3 \end{array}}
+ \newcommand{\dual}{\delta}
+
+ \newcommand{\mono}{\rightarrowtail}
+ \newcommand{\epi}{\twoheadrightarrow}
+ \newcommand{\iso}{\rightarrowtail \!\!\!\!\! \rightarrow}
+
+ \newcommand{\defegy}[1][.1]{\hspace{#1cm}\overset{\textup{\tiny def}}{=}\hspace{#1cm}}
+ \newcommand{\defpont}[1][.1]{\hspace{#1cm}\overset{\textup{\tiny def}}{:}\hspace{#1cm}}
+ \newcommand{\defekv}[1][.1]{\hspace{#1cm}\overset{\textup{\tiny def}}{ \Leftrightarrow }\hspace{#1cm}}
+ \newcommand{\kisiff}{\Leftrightarrow}
+ \newcommand{\kisimplies}{\Rightarrow}
+ \newcommand{\PB}{\mathbf H}
+ \newcommand{\PBDot}{\underline{\mathbf H}}
+% \newcommand{\implies}{\Longrightarrow}
+ \newcommand{\lthen}{\rightarrow}
+ \newcommand{\liff}{\leftrightarrow}
+ \newcommand{\forallin}[2]{(\forall #1 \in #2)}
+ \newcommand{\existsin}[2]{(\exists #1 \in #2)}
+ \newcommand{\nexistsin}[2]{(\nexists #1 \in #2)}
+ \newcommand{\forallp}[1]{(\forall #1)}
+ \newcommand{\existsp}[1]{(\exists #1)}
+
+\newcommand{\magyi}[1]{\textup{\bemph{\tiny #1}}}
+\newcommand{\magyarazat}[2]{\overset{\substack{\textup{#2}\\ \downarrow}}{#1}}
+
+\newcommand{\theory}[2][]{\mathrm{th}_{\mathfrak{#1}}(#2)}
+
+\newcommand{\seenby}{\reflectbox {$R$}}
+\newcommand{\derives}[1][]{\vdash_{\mathrm{#1}}}
+\newcommand{\legkisebb}[2]{{[}\mathrm{min}\, #1{]} #2}
+\newcommand{\legnagyobb}[2]{{[}\mathrm{max}\, #1{]} #2}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{tomb}[2][.1]{\arraycolsep=#1cm\begin{array}{#2}}{\end{array}}
+
+\beamertemplatenavigationsymbolsempty
+\author{Attila Moln\'ar}
+\date{2015. February 22.}
+\title{Provability Logic}
+\institute{ELTE}
+
+\newcommand{\kicsinyit}[3][1]{\scalebox{#2}{\begin{minipage}{#1\textwidth}#3\end{minipage}}}
+
+
+ 	
+%TÁRGYNYELV
+
+
+
+%Metamatematikai jelek
+	%Logika
+		%Kondicionális
+			\newcommand{\mlthen}[2]{ \begin{array}c  #1 \\ \hline #2 \end{array}}
+		%Bikondicionális
+			\newcommand{\mliff}[2]{ \begin{array}c  #1 \\ \hline  \hline #2 \end{array}}
+		%Konjunkció
+			\newcommand{\mland}[2]{\begin{array}l #1 \\ #2 \end{array}}
+		%Negáció
+			\newcommand{\mlnot}[1]{ \lnot #1}
+	%Következményrelációk	
+		%Szintaktikai következményreláció
+			\newcommand{\lev}[2]{#1 \vdash #2}
+		%Szemantikai következményreláció
+			\newcommand{\kov}[2]{#1 \Rightarrow #2}
+	%Szemantikai igazsággal kapcsolatos állítások
+		\newcommand{\strue}[2]{\left| #2\right|_{#1} =i }
+		\newcommand{\sfalse}[2]{\left| #2\right|_{#1} =h }
+		%\newcommand{\strue}[2]{ \mathfrak{#1}\models #2}
+		%\newcommand{\sfalse}[2]{\mathfrak{#1}\models\!\! \setminus #2}
+		
+% Definiáló egyenlőségek
+			\newcommand{\struedef}[2]{\left| #2\right|_{#1} \defegy i }
+			\newcommand{\sfalsedef}[2]{\left| #2\right|_{#1} \defegy h }
+	%Helyettesítés
+		\newcommand{\termsub}[3]{\left({#1}\right)\left[{#3}/{#2}\right]}
+	%Univerzális séma:
+		\newcommand{\us}{\mathcal}
+
+
+%Halmazelméleti műveletek és relációk
+	%Unió	
+		\newcommand{\mlcup}[2]{ #1 \cup \, #2 }
+	%Standard modell műveletei
+		%Szukcesszor
+			\newcommand{\mlsuc}[1]{ ({#1} \cup \{{#1} \} )}
+		%Összeg
+			\newcommand{\mlplus}[2]{ |{#1} \uplus {#2} | }
+		%Szorzás
+			\newcommand{\mltimes}[2]{ |{#1} \times {#2} |}
+\newcommand{\csuszkazd}[1]{\only<2>{\hspace{-#1 cm}}}
+
+\tikzset{
+world/.style={inner sep=.5mm, fill=black, circle, draw=black, thick},
+redworld/.style={inner sep=.5mm, fill=red, circle, draw=black, thick},
+light/.style={>=stealth,->,decorate,decoration={pre length=0.2cm, post length=0.2cm, snake, amplitude=.4mm, segment length=2mm}},
+time/.style={>=stealth,->,decoration={border,segment length=2mm, angle=90, amplitude=.5mm}, postaction={draw,decorate}},
+tav/.style={>=stealth,<->, fill=red, draw=red},
+causal/.style={>=stealth,->, opacity=.3, thick},
+geometria/.style={opacity=.3},
+}
+
+\newcommand\prolog{\raisebox{-1ex}{\includegraphics[height=2em]{prologlogo.png}}}
+\newcommand\ol[1]{\textcolor{blue}{\texttt{#1}}}
+\newcommand\ml[1]{\textcolor{red}{\texttt{#1}}}
+\newcommand\ha{:-}
+\newcommand\valasz{\pause \hfill}
+\newcommand{\oda}[5][]{\begin{tikzpicture}[remember picture,overlay]
+\node [#1] at ([xshift=#3 cm, yshift=#4 cm]current page.#2){#5};
+\end{tikzpicture}}
+\newcommand{\lista}[1]{\left[#1\right]}
+%\newcommand{\isa}{\texttt{isa}}
+\newcommand{\knight}{\texttt{knight}}
+\newcommand{\knave}{\texttt{knave}}
+\newcommand{\member}{\texttt{member}}
+\newcommand{\atom}[1]{\texttt{#1}}
+\newcommand{\szabaly}[2]{#1\texttt{:-}#2}
+\newcommand{\sol}{M}
+\newcommand{\says}[1]{\mathbf{S}_{#1}}
+\newcommand{\isa}[2]{\mathrm{#2}(#1)}
+\begin{document}
+\footnotesize
+
+\begin{frame}
+\centering
+\textsc{\Large Prolog 2017 \\[1em] \textsc{elte}, logic department}
+
+\bigskip
+
+{ \small \begin{tabular}{ccc}
+    Sára Jellinek &\hspace{3cm}&  Attila Moln\'ar
+\\  Central European University && Szent László Gimnázium
+\\[3em] \includegraphics[width=3cm]{ceulogo.png}&&    \includegraphics[width=2.5cm]{pseudobagoly.png}
+%\\[3em] \scalebox{.1}{\input{bagoly.tikz}}
+    \end{tabular}
+    }
+
+ \begin{figure}
+%\includegraphics[scale=.3]{elte_cimer.png}
+%\includegraphics[scale=.3]{elte_cimer.png}
+ \end{figure}
+
+	\today
+\end{frame}
+
+%\begin{comment}
+%History
+%Deklaratív programozás, Logic programming
+%Language Atoms, Numbers, Variables, (Complex) Terms -> Knowledge base
+%Facts (closed sentences with no quantification in them)
+%Rules () - Horn clauses
+%Excercises: all
+%Unification - the tool
+%Proof search
+%Proof tree
+%Excercises
+%\end{comment}
+
+
+\begin{frame}[t]
+\frametitle{Today}
+
+\begin{enumerate}
+  \item Check the homework
+  \item Cuts: \cemph{!}
+      \begin{itemize}\footnotesize
+        \item \textcolor{red}{red} cuts
+        \item \textcolor{green}{green} cuts
+      \end{itemize}
+  \item Applying cuts: Negation as failure \cemph{\textbackslash +}
+      \begin{itemize}\footnotesize
+        \item \textsc{hw1}: improve CookAssistant with negation.
+      \end{itemize}
+  \item Solving Smullyan's knights and knaves puzzles
+      \begin{itemize}\footnotesize
+        \item Teaching \prolog Logic: Gentzen's Sequent calculus
+        \item Gen\&Test paradigm
+        \item \textsc{hw2}: generalize solution to other puzzles
+      \end{itemize}
+  \end{enumerate}
+\end{frame}
+
+
+\szakasz[Cut]{Cut}
+
+\begin{frame}[t]
+\frametitle{Cut}
+\vspace{.5cm}
+
+Prolog works with backtracing which can lead to inefficiency, i.e. wasting time and memory on possibilities that lead nowhere.
+\vspace{.5cm}
+
+We can control backtracking by the cut predicate: !/0
+\vspace{.5cm}
+
+Cut is a goal that always succeeds, so \prolog will always get through it.
+\vspace{.5cm}
+
+
+\ol{p(X):- b(X), c(X), d(X), e(X). }
+
+\begin{center}
+vs
+\end{center}
+
+\ol{p(X):- b(X), c(X), !, d(X), e(X). }
+
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Cut}
+\vspace{.5cm}
+
+The cut only commits us to choices made since the parent goal was unified with the \cemph{left-hand side} of the clause containing the cut.
+\vspace{.5cm}
+
+\ol{q:- p$_1$,\dots , p$_m$, !, r$_1$, \dots , r$_n$. }
+\vspace{.3cm}
+
+when we reach the cut it commits us:
+\begin{itemize}
+\item to this particular clause of \ol{q}
+\item to the choices made by \ol{p$_1$, \dots , p$_m$}
+\item \cemph{NOT} to choices made by \ol{r$_1$, \dots , r$_n$}
+\end{itemize}
+
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Green cut}
+
+Let's consider the following \ol{max/3} predicate:
+\vspace{.3cm}
+
+\ol{max(X,Y,Y):- X =< Y.}\\
+\ol{max(X,Y,X):- X > Y.}
+\vspace{1cm}
+\pause
+
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,3)}\\
+\pause
+\ol{yes}\\
+
+\ol{?- max(7,3,7)}\\
+\pause
+\ol{yes}
+\vspace{.1cm}
+\end{minipage}\right] $
+\pause
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,2)}\\
+\pause
+\ol{no}\\
+
+\ol{?- max(2,3,5)}\\
+\pause
+\ol{no}
+\vspace{.1cm}
+\end{minipage}\right] $
+\pause
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,Y)}\\
+\pause
+\ol{Y = 3}\\
+
+\ol{?- max(7,3,\_)}\\
+\pause
+\ol{true}
+\vspace{.1cm}
+\end{minipage}\right] $
+\vspace{1cm}
+\pause
+
+After \ol{?- max(2,3,Y)} if asked for more solutions, polog will try to satisfy the second clause, which is completely useless -- since we know the two clauses are exclusive (hence, it returns with \ol{false}).
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Green cut}
+
+We can fix this by adding a cut to the rule:
+\vspace{.5cm}
+
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X):- X > Y.}
+\vspace{.5cm}
+\pause
+
+Now
+\begin{itemize}
+\item If the \ol{X =< Y} \cemph{succeeds}, the cut commits us to this choice, and the \cemph{second clause} of \ol{max/3} is \cemph{not considered}.
+\item If the \ol{X =< Y} fails, Prolog goes on to the second clause.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{}
+
+
+\centering
+\begin{tikzpicture}
+\node[anchor = west] at (-3, 1.5){\textsc{Without cut}};
+\node[anchor = west] at (3, 1.5){\textsc{With cut}};
+\node[anchor = west] at (-3, 0.7){\ol{max(X,Y,Y):- X =< Y.}};
+\node[anchor = west] at (-3, 0.2){\ol{max(X,Y,X):- X > Y.}};
+\pause
+\node[overlay, anchor = north west] at (-3,-.3){\includegraphics[scale=.8]{1.png}};
+\pause
+\node[overlay, anchor = north west] at (-3,-3.3){\includegraphics[scale=.8]{2.png}};
+\pause
+\node[anchor = west] at (3, 0.7){\ol{max(X,Y,Y):- X =< Y, !.}};
+\node[anchor = west] at (3, 0.2){\ol{max(X,Y,X):- X > Y.}};
+\pause
+\node[overlay, anchor = north west] at (3,-.7){\includegraphics[scale=.8]{3.png}};
+\pause
+\node[overlay, anchor = north west] at (3,-3.3){\includegraphics[scale=.8]{4.png}};
+
+\end{tikzpicture}
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Green cut, red cut}
+
+\textsc{Green cut:} cuts that do not change the meaning of a predicate. \\
+E.g. \ol{max/3} -- the new code gives exactly the \bemph{same answers} as the old version, but it is \bemph{more efficient}.\\
+\vspace{.5cm}
+\pause
+
+To see how red cuts work, let's modify our \ol{max/3}:\\
+\vspace{.25cm}
+
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X):- X > Y.}
+\vspace{.7cm}
+
+The second clause is basically redundant. Let's remove it!
+\vspace{.25cm}
+
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X).}
+
+\vspace{.5cm}
+
+Now what?
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Red cut}
+
+\vspace{.5cm}
+
+
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X).}
+\vspace{.5cm}
+ \pause
+
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,X)}\\
+\pause
+\ol{X = 3}
+\vspace{.1cm}
+\end{minipage}\right] $
+\pause
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(4,3,X)}\\
+\pause\ol{X = 4}
+\vspace{.1cm}
+\end{minipage}\right] $
+\pause
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,2)}\\
+\pause
+\texttt{\textcolor{red}{true}}
+
+\vspace{.1cm}
+\end{minipage}\right] $
+\vspace{.5cm}
+\pause
+
+Now \prolog will be able to answer alternative questions/queries, but not yes-no ones.
+\vspace{.5cm}
+
+Because of the form of the query, it will go directly to the second clause, and only check \ol{max(X,Y,X).}, which is obviously true -- syntactically.
+
+
+
+
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Red cut}
+\vspace{.5cm}
+
+$\left[ \begin{minipage}{.45\textwidth}
+\vspace{.1cm}
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X).}
+\vspace{.1cm}
+\end{minipage}\right] $
+$\left[ \begin{minipage}{.45\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,2)}\\
+\texttt{\textcolor{red}{true}}
+\vspace{.1cm}
+\end{minipage}\right] $
+
+\vspace{.5cm}
+
+\dots however, we can patch it with a unification after the cut:
+\vspace{.25cm}
+
+\ol{max(X,Y,Z):- X =< Y, !, Y=Z.}\\
+\ol{max(X,Y,X).}
+\vspace{.5cm}
+\pause
+
+Mind the \ol{Z} in the head of the rule! This \ol{(X,Y,Z)} tempts \prolog to try to substitute in the first clause, since \ol{(X,Y,Z)} under appropriate circumstances can unify with \ol{(X,Y,X)}!
+\vspace{.25cm}
+\pause
+
+After \ol{X =< Y} (2 =< 3) succeeds, we ask if 3=2, which will be \cemph{false}.
+\vspace{.25cm}
+\pause
+
+Because of the \ol{!} \prolog cannot go back and try another setup for substitution (\ol{max(X,Y,X)}), it will be stuck with what was given before the \ol{!}.
+\vspace{.25cm}
+\pause
+
+However, if we ask \ol{max(4,3,X)}, it will be able to go to the second clause after failing with the first, since if fails already before the \ol{!}, at \ol{X =< Y}.
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Red cut}
+
+\vspace{.5cm}
+\textsc{Red cut:} a cut that changes the meaning of the predicate. If we remove it, we do not get an equivalent program.
+\vspace{1cm}
+\pause
+Using red cut the resulting program
+\begin{itemize}
+\item will not be fully declarative (we interfere with the control flow)
+\item can be harder to read
+\item might be prone to subtle programming mistakes
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Negation as Failure}
+\vspace{.2cm}
+
+Combining \ol{!, fail.} we can express \cemph{negation}:\\
+\vspace{.3cm}
+\pause
+
+\ol{burger(X):- bigMac(X).}\\
+\ol{burger(X):- bigKahunaBurger(X).}\\
+\ol{burger(X):- whopper(X).}
+\vspace{.25cm}
+\pause
+
+\ol{bigMac(a).}\\
+\ol{bigKahunaBurger(b).}\\
+\ol{bigMac(c).}\\
+\ol{whopper(d).}
+\vspace{.25cm}
+\pause
+
+\ol{enjoys(vincent,X):- bigKahunaBurger(X),!, fail.}\\
+\ol{enjoys(vincent,X):- burger(X).}
+\vspace{.4cm}
+\pause
+
+\ol{?- enjoys(vincent,a).}\\
+\pause
+\ol{true}
+\vspace{.25cm}
+\pause
+
+\ol{a} gets substituted in \ol{bugKahunaBurger(X)} where it will fail and go for the second clause. Among \ol{burger}s \ol{bigMac} is the first, so it succeeds, the query will be true.
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Negation as Failure}
+\vspace{.2cm}
+
+Combining \ol{!, fail.} we can express \cemph{negation}:\\
+\vspace{.3cm}
+
+\ol{burger(X):- bigMac(X).}\\
+\ol{burger(X):- bigKahunaBurger(X).}\\
+\ol{burger(X):- whopper(X).}
+\vspace{.25cm}
+
+\ol{bigMac(a).}\\
+\ol{bigKahunaBurger(b).}\\
+\ol{bigMac(c).}\\
+\ol{whopper(d).}
+\vspace{.25cm}
+
+\ol{enjoys(vincent,X):- bigKahunaBurger(X),!, fail.}\\
+\ol{enjoys(vincent,X):- burger(X).}
+\vspace{.3cm}
+
+\ol{?- enjoys(vincent,b).}\\
+\pause
+\ol{false}
+\vspace{.25cm}
+\pause
+
+Prolog tries to substitute \ol{b} in \ol{bigKahunaBurger(X)} in the first clause. It will succeed, since \ol{bigKahunaBurger(b).}, so it goes on, through \ol{!} all the way to \ol{fail}. Because of the \ol{!} \prolog cannot go back and look for other possible substitutions for \ol{b}\dots
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Negation as Failure}
+\vspace{.5cm}
+
+The cut-fail combination offers us some form of negation.
+\vspace{.3cm}
+
+It is called \cemph{negation as failure}, and defined as follows:
+\vspace{.35cm}
+
+\ol{neg(Goal):- Goal, !, fail.}\\
+\ol{neg(Goal).}
+\vspace{.2cm}
+
+\emph{If Goal succeeds, make the clause fail, otherwise let it go on.}
+\vspace{.5cm}
+
+Since negation as failure is frequently used in \prolog, there is a built-in predicate for it: \ol{$\setminus$+}
+
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Negation as Failure}
+\vspace{.5cm}
+
+3 equivalent expressions of the fact that \ol{vincent enjoys} all sorts of \ol{burger}s except for \ol{bigKahunaBurger}:
+\vspace{.4cm}
+
+\ol{enjoys(vincent,X):- bigKahunaBurger(X), !, fail.}\\
+\ol{enjoys(vincent,X):- burger(X).}
+\vspace{.3cm}
+
+\ol{enjoys(vincent,X):- burger(X), neg(bigKahunaBurger(X)).}\\
+\vspace{.3cm}
+
+\ol{enjoys(vincent,X):- burger(X), $\setminus$+bigKahunaBurger(X).}\\
+\vspace{1cm}
+
+
+Negation as failure is not a logical negation.
+\vspace{.2cm}
+
+After the \ol{!} we cannot go back, the program will fail.
+\vspace{.2cm}
+
+This is why we need to have \ol{burger(X)} before \ol{$\setminus$+}. We need to allow \prolog to freely select, substitute from our set of \ol{burger}s first.
+
+\end{frame}
+
+
+\szakasz[A trick with fail]{A trick with \ol{fail}}
+
+\begin{frame}[t]
+\frametitle{A trick with \ol{fail}}
+
+Let's say we want \prolog not only to give us a suggestion about what \ol{burger}s \ol{vincent} would like, but we want to be able to have a full list of these \ol{burger}s!
+\vspace{.25cm}
+\pause
+
+\ol{burger(X):- bigMac(X).}\\
+\ol{burger(X):- bigKahunaBurger(X).}\\
+\ol{burger(X):- whopper(X).}
+\vspace{.2cm}
+
+\ol{bigMac(a).}\\
+\ol{bigKahunaBurger(b).}\\
+\ol{bigMac(c).}\\
+\ol{whopper(d).}
+\vspace{.2cm}
+
+\ol{enjoys(vincent,X):- burger(X), $\setminus$+bigKahunaBurger(X).}\\
+\vspace{.2cm}
+\pause
+
+\ol{whattobuyto(Y):- enjoys(Y,X), write(X), nl, fail; true.}
+\vspace{.25cm}
+\pause
+
+Until there are \ol{burger}s that have never been tested, \ol{fail} will make \prolog going back to \ol{burger}s -- since \prolog backtracks locally. At the point where all the \ol{burger}s inthe KB have been checked, \prolog will go back to the main rule (\ol{whattobuyto}) to see if there are any other ways to save the day, e.g. a second clause\dots
+
+\end{frame}
+
+\szakasz[HW1]{Homework}
+\begin{frame}
+\frametitle{Homework}
+\centering Improve the CookAssistant program to deal with diets via exceptions, e.g., something is a lactosefree diet iff it does \cemph{not} contain lactose, and milk contains lactose, cottage cheese contains lactose, etc.
+\end{frame}
+
+
+\szakasz[Gen\&Test paradigm]{A puzzle of Smullyan}
+\begin{frame}
+\frametitle{A puzzle:}
+\centering The following example originates from Mike Barley.
+\end{frame}
+
+\begin{frame}
+\frametitle{A puzzle:}
+\framesubtitle{text version}
+Every inhabitant is either a \bemph{knight} or a \bemph{knave}.
+Knights always tell the truth and knaves always lie.
+Three inhabitants were standing together in a garden.
+A stranger $S$ passed by and asked $A$,
+\begin{itemize}
+\item[S:] ``Are you a knight or a knave?''
+\end{itemize}
+$A$ answered, but rather indistinctly,
+\begin{itemize}
+\item[A:] \dots n/a \dots
+\end{itemize}
+so the stranger could not make out what he said. \\ The stranger $S$ then asked $B$,
+\begin{itemize}
+\item[S:] ``What did $A$ say?''
+\end{itemize}
+$B$ replied,
+\begin{itemize}
+\item[B:] ``$A$ said that he is a knave.''
+\end{itemize}
+At this point the third man, $C$, said,
+\begin{itemize}
+\item[C:] ``Don't believe $B$; he is lying!''
+\end{itemize}
+What are $B$ and $C$?
+\oda[anchor=east, scale=20, inner sep=0mm]{east}{-1}{-1}{\bemph{?}};
+\end{frame}
+
+\begin{frame}
+  \frametitle{Puzzle -- 1}
+    \begin{tikzpicture}[scale=.5]
+    \node[scale=.5] at (0,0){\includegraphics{caucman.png}};
+    \node[scale=.5] at (5,0){\includegraphics{afrwoman.png}};
+    \node[scale=.5] at (10,0){\includegraphics{caucwoman.png}};
+    \node[draw, rounded corners=2pt, inner sep=2mm] at (-2,9.5){\begin{minipage}{2.5cm}Are you a knight or knave?\end{minipage}};
+    \node[ellipse callout, draw, callout relative pointer={(-60:.5)}] (buba) at (-1.5,6){\begin{minipage}{2cm} \% \# \% \# \% \end{minipage}};
+    \node[draw, rounded corners=2pt, inner sep=2mm] at (5,9){\begin{minipage}{2cm}What did $A$ just say?\end{minipage}};
+    \node[ellipse callout, draw, callout relative pointer={(-90:.3)}] (bubb) at (5,6){\begin{minipage}{2cm}$A$ said that he is a knave.\end{minipage}};
+    \node[ellipse callout, draw, callout relative pointer={(-115:1)}] (bubc) at (12,7){\begin{minipage}{2.5cm}Don't believe $B$; she is lying!\end{minipage}};
+    \end{tikzpicture}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Formalizing the statements}
+  The problem here is the (nonnormal) operator ``A says that\dots '' $\leftrightsquigarrow S_a\varphi$.
+
+    \begin{tikzpicture}[scale=.5]
+    \node[scale=.5] at (0,0){\includegraphics{caucman.png}};
+    \node[scale=.5] at (5,0){\includegraphics{afrwoman.png}};
+    \node[scale=.5] at (10,0){\includegraphics{caucwoman.png}};
+    \node[draw] (bubb) at (2,5){\begin{minipage}{5cm}$S_bS_a\mathrm{Knave}(a)$\\ \texttt{says(b,says(isa(a,knave)))}\end{minipage}};
+    \node[draw] (bubc) at (14,5){\begin{minipage}{5cm}$S_c\mathrm{Knave}(B)$\\ \texttt{says(c,isa(c,knave))}\end{minipage}};
+    \end{tikzpicture}
+
+    The reason we use \texttt{isa(a, knave)} instead of \texttt{knave(a)} is that we want to switch the predicate knave to knight while we are trying to solve the problem. But \prolog switch values of variables, not predicates, so knave has to be an atom, not a complex term.
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gen\&Test paradigm}
+    \begin{itemize}
+        \item[(1)] First we define/decide what is the exact form of the solution we are interested in. This is called the \cemph{solution structure}.
+
+            We need the solution to be a list like
+            \[ \lista{\ol{isa}(\atom a,A), \ol{isa}(\atom b,B), \ol{isa}(\atom c,C)} \]
+        \item[(2)]  And here we will search the values of $A,B,C$ from the set $\{\knight, \knave\}$, so we will have \cemph{constraints} like
+        \[ \begin{array}{l}
+            Types = \lista{\ol{knight}, \ol{knave}}
+            \\ \member(A,Types),
+            \\ \member(B,Types),
+            \\ \member(C,Types)
+        \end{array}\]
+        \item[(3)] To solve the puzzle we have the list of \cemph{clues} and the solution will be something having the defined solution structure. So the main rule will be:
+        \[ \szabaly{\texttt{solve}(Clues, Solution)}{\begin{array}[t]{l}
+                Solution = \lista{\ol{isa}(\atom a,A), \ol{isa}(\atom b,B), \ol{isa}(\atom c,C)}
+            \\ Types = \lista{\ol{knight}, \ol{knave}}
+            \\ \member(A,Types),
+            \\ \member(B,Types),
+            \\ \member(C,Types) \end{array}}, \dots   \]
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Gen\&Test paradigm}
+  %and now comes the interesting part
+    \begin{itemize}
+        \item[(4)] Now we have to \cemph{generate} solutions and \cemph{test} whether it is \cemph{consistent} with the conclusions that can be \cemph{derived} from the clues, the solution and consequences of consequences of these, etc.
+            So we need a notion of consequence, i.e., we have to teach define a consequence relation that deals with knights, knaves, the 'says that' operation, \dots.
+
+            Before that we state the final form of the main rule:
+        \[ \szabaly{\texttt{solve}(Clues, Solution)}{\begin{array}[t]{l}
+                Solution = \lista{\ol{isa}(\atom a,A), \ol{isa}(\atom b,B), \ol{isa}(\atom c,C)}
+            \\ Types = \lista{\knight, \knave}
+            \\ \member(A,Types),
+            \\ \member(B,Types),
+            \\ \member(C,Types),
+            \\ \atom{consequences}(Solution, Clues, Consequences),
+            \\ \atom{consistent}(Solution, Consequences). \end{array}}\]
+            So first \prolog will build a Solution with its Consequences and after that in the final line it will check whether it is consistent with the solution. That is the place where we will use a big fat negation to send \prolog back and find another candidate for solution if the actual one does not satisfy.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+  \frametitle{Consequences}
+  Note that \ol{consequences} is a certain kind of \cemph{sequent}.
+
+  Because of that we will get acquainted with
+  \\Gentzen's sequent calculus.
+  \oda[anchor=north east]{north east}{0}{-1}{\begin{tabular}{c}\includegraphics[scale=.3]{Gerhard_Gentzen.jpg}\\  Gerhard Gentzen \end{tabular}}
+  \oda[anchor=south west]{south west}{0}{0}{\begin{tabular}{c}\includegraphics[scale=.25]{gentzenpenis3.png}\\  First-order sequent calculus \\ (without stipulations)\end{tabular}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Simplified sequent calculus}
+
+  \includegraphics[scale=.6]{gentzenpenis4.png}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Simplified sequent calculus}
+  \begin{itemize}
+    \item $A,B\to C,D$ means that ``$A$ \cemph{and} $B$ implies $C$ \cemph{or} $D$'', similarly for longer lists.
+    \item For every constant we have two derivation rules: one that introduces it to the \cemph{left} and one that introduces it to the \cemph{right}.
+    \item The fundamental theorem, called ``Hauptsatz'', says that the squared rule can be eliminated from every proof. That is the cut-elimination theorem. So whenever you can prove a theorem using the Gentzen calculus, you will have a proof with the same conclusion but in which the cut rule is not used. We note that these proofs in practice are significantly longer, sometimes needs more steps than the atoms in the universe\dots
+    \item Cut-elimination is important in proof searches because Cut is the only rule in which the premises are not already in the conclusion sequent. The proof search algorythm does not have to guess for the cutted premise in the proof search if the cut rule was not used\dots
+  \end{itemize}
+\end{frame}
+
+
+
+
+
+\szakasz[language]{language}
+\begin{frame}
+  \frametitle{Language fragment of the logical puzzle}
+Individuals: $\alpha \in \{a,b,c\}$.
+\bigskip
+
+Unary predicate symbols: $\{\mathrm{Knight}, \mathrm{Knave}\}$
+
+\bigskip
+Formulas: \[\varphi ::= \mathrm{Knight}(\alpha)\vonal \mathrm{Knave}(\alpha) \vonal \says\alpha\varphi\]
+
+\bigskip
+\bemph{Note that there is no negation in the language, but instead we have two predicates instead of one that are complements of each other!}
+\vfill
+
+\textsc{Clues}
+\begin{itemize}
+\item[(1)]  $\says b\says a\isa{a}{Knave}$
+\item[(2)]  $\says c\isa{b}{Knave}$
+\end{itemize}
+
+Now we develop rules for sequents that has formulas
+\begin{itemize}
+  \item on the left side of sequents \dots
+  \item \dots that are similar to the clues.
+\end{itemize}
+
+We need them on the left because they are \emph{clues}: we have to use them as premises. On the right side we collect their \emph{consequences}. The sequent rules are inductive definitions of the consequence set of premises. (Designed specially for the clues we have.)
+\end{frame}
+
+
+\szakasz[consequences]{consequences}
+\begin{frame}
+  \frametitle{Exit clause -- starting sequent}
+Exit clause of recursion: \[ \varnothing \implies \varnothing \tag{R0}\]
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Meaning of knighthood:}
+\pause
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knight}, \says \alpha \varphi,\Gamma&\implies& \Delta, \varphi
+    \end{array}\tag{R1}\]}
+\bigskip
+
+Note that if we end our axiomatization here, then the \cemph{only way} we can put a $\varphi$ on the right side of the $\implies$ is to put a $\isa{\alpha}{Knight}, \says \alpha \varphi$ on the left side of $\implies$!
+
+\bigskip
+
+This is very important: The \cemph{cost} of introducing something to the left/right is always a formula on the other side of the $\implies$!
+
+\bigskip
+
+So to get the clues on the left side we have to analyze their consequences\dots
+
+\bigskip
+
+Also, in a way this means that every formula we can deal with are uttered by knights!
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Meaning of knavehood:}
+\pause
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knave}, \says \alpha \isa{\beta}{Knight},\Gamma &\implies& \Delta, \isa{\beta}{Knave}
+    \end{array}\tag{R2a}\]}
+\bigskip
+\pause
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knave}, \says \alpha \isa{\beta}{Knave},\Gamma &\implies& \Delta, \isa{\beta}{Knight}
+    \end{array}\tag{R2b}\]}
+\bigskip
+
+%It is a possibility to introduce a negation; we should then introduce rules for negation as well, but note that in that puzzle only \bemph{atomic sentences are negated}, complex formulas like $\says \alpha \varphi$ are not. That's a lie.
+\end{frame}
+
+\begin{frame}
+  \frametitle{reported speech: $\says \alpha \says\beta \varphi$}
+\pause
+In case of \textbf{knights} the rule we took deals with that:
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knight}, \says \alpha \only<2>{\varphi}\only<3->{\underbrace{\says\beta\psi}_{\varphi}},\Gamma&\implies& \Delta, \only<2>{\varphi}\only<3->{\underbrace{\says\beta\psi}_{\varphi}}
+    \end{array}\tag{R1}\]}
+\pause
+\pause
+In case of \textbf{knaves} we are in trouble -- or are we?
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knave}, \says \alpha \says\beta\varphi ,\Gamma&\implies& \Delta\only<4>{, \cemph{?}}
+    \end{array}\tag{R3}\]}
+\pause
+If a knave lied about a statement $\says \alpha\varphi$ what is the case then? It can be anything except the truth! It can even be a lie if $\alpha$ just didn't said anything! So the case is that it doesn't have conclusions at all!
+
+\end{frame}
+
+\szakasz[consistence]{consistence}
+\begin{frame}
+  \frametitle{Consistence}
+We are ready with the rules, BUT we have no notion for consistence since we have no negation!
+
+We design the consistent for sequents: Consistence is binary relation: A premise set can be consistent with its conclusions.
+\begin{itemize}
+    \item The solution set $\varnothing$ is consistent with the empty set of conclusions.
+    \item $\Gamma\cup\{\isa{\alpha}{Knight}\}$ is a consistent with $\Delta$ iff $\isa{\alpha}{Knave}\notin \Delta$ and  $\Gamma$ is a consistent with $\Delta$.
+    \item $\Gamma\cup\{\isa{\alpha}{Knave}\}$ is a consistent with $\Delta$ iff $\isa{\alpha}{Knight}\notin \Delta$ and  $\Gamma$ is a consistent with $\Delta$.
+\end{itemize}
+
+\end{frame}
+
+\szakasz[\prolog]{\prolog}
+\begin{frame}
+  \frametitle{R0 for \prolog}
+
+\begin{minipage}{.45\textwidth}
+\[ \varnothing \implies \varnothing\]
+\end{minipage}
+\begin{minipage}{.45\textwidth}
+\ol{consequences(\_, [], []).}
+\end{minipage}
+\end{frame}
+
+\begin{frame}
+  \frametitle{R1 for \prolog}
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knight}, \says \alpha \varphi,\Gamma&\implies& \Delta, \varphi
+    \end{array}\tag{R1}\]}
+
+\ol{\begin{tabular}{l} consequences(Solution, [says(X, A)|Gamma], [A |Delta]) :-
+\\	\qquad member(isa(X, knight), Solution),
+\\	\qquad consequences(Solution, Gamma, Delta).\end{tabular}
+}
+\end{frame}
+
+\begin{frame}
+  \frametitle{R2 for \prolog}
+
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knave}, \says \alpha \isa{\alpha}{Knight},\Gamma &\implies& \Delta, \isa{\alpha}{Knave}
+    \end{array}\tag{R2a}\]}
+\bigskip
+
+\ol{\begin{tabular}{l}
+    consequences(Solution, \\{} [says(X, isa(Y, knight))|Gamma], [isa(Y, knave)|Delta]):-
+	\\ \qquad member(isa(X, knave), Solution),
+	\\ \qquad consequences(Solution, Gamma, Delta).
+    \end{tabular}}
+\end{frame}
+
+\begin{frame}
+  \frametitle{R3 for \prolog}
+
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knave}, \says \alpha \says\beta\varphi ,\Gamma&\implies& \Delta
+    \end{array}\tag{R3}\]}
+
+    \bigskip
+
+\ol{\begin{tabular}{l}
+    consequences(Solution, [says(X, says(\_,\_))|Gamma], Delta):-
+	\\ \qquad member(isa(X, knave), Solution),
+	\\ \qquad consequences(Solution, Gamma, Delta).
+    \end{tabular}}
+\end{frame}
+
+
+
+\begin{frame}
+  \frametitle{Test it!}
+
+
+  \pause
+
+   \centering The program is stupid.
+
+   \pause
+
+Somehow the program does not recognize that b is a knave. This is because the reported speech rule does not work. What did we miss?
+
+\pause
+
+Debug!
+
+\pause
+
+$\says \beta \varphi$ is on the right side, the algorythm will not analyze it!
+
+
+\pause
+New rule:
+
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+      \says\beta \varphi, \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knight}, \says \alpha \says\beta\varphi ,\Gamma&\implies& \Delta
+    \end{array}\tag{R4}\]}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test it!}
+
+  \pause
+
+   \centering The program is still stupid.
+
+   \pause
+
+(R1) is still wrong. There are two rules for reported speeches of knights.
+
+\pause
+We have to restrict (R1) for atomic sentences!
+
+Old one:
+
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knight}, \says \alpha \varphi,\Gamma&\implies& \Delta, \varphi
+    \end{array}\tag{R1}\]}
+
+\pause
+
+new one: basically $\varphi := P(\beta)$
+    {\Large \[ \arraycolsep = 0.5mm \begin{array}{rcl}
+       \Gamma &\implies& \Delta
+    \\ \hline
+        \isa{\alpha}{Knight}, \says \alpha \isa{\beta}{P},\Gamma&\implies& \Delta, \isa{\beta}{P}
+    \end{array}\tag{R1}\]}
+
+Now we have disjoint rules and the proof search became unambiguous.
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Test}
+
+  \centering
+  \pause
+
+  now it works!
+\end{frame}
+
+\szakasz[HW2]{Puzzle-2}
+
+
+\begin{frame}
+  \frametitle{Puzzle-2}
+  % Egy erdőben lovagok és lókötők élnek (a lovagok mindig igazat mondanak, a lókötők mindig hazudnak).
+% Közülük néhányan farkasemberek, akik éjszakánként emberevő farkassá változnak. Három
+%ember (A, B és C) mond egy-egy állítást, ezek alapján döntsd el, hogy lovag vagy lókötő-e a farkasember!
+% A: C farkasember.
+% B: Nem vagyok farkasember.
+% C: Közülünk legalább ketten lókötők.
+
+\begin{minipage}{.7\textwidth}
+Suppose you are visiting a forest in which every inhabitant is either a knight or a knave. (We recall that knights
+always tell the truth and knaves always lie.)
+In addition, some of the inhabitants are werewolves and have the annoying habit of sometimes turning into wolves at night and devouring people. A werewolf can be either a knight or a knave.
+
+You are interviewing three inhabitants, $A$,$B$, and $C$, and it is known that exactly one of them is a werewolf. They make the following statements:
+\end{minipage}
+
+\begin{itemize}
+  \item[A:] $C$ is a werewolf.
+  \item[B:] I am not a werewolf.
+  \item[C:] At least two of us are knaves.
+\end{itemize}
+Our problem has two parts:
+\begin{itemize}
+  \item[(a)] Is the werewolf a knight or a knave?
+  \item[(b)] If you have to take one of them as a traveling companion,
+and it is more important that he not be a werewolf than
+that he not be a knave, which one would you pick?
+\end{itemize}
+
+  \oda[anchor=north east]{north east}{0}{-1}{\begin{tabular}{c}\includegraphics[scale=.4]{smullyan.jpg}\\  Raymond M. Smullyan \\ \emph{What Is The Name of This Book?}\\ Puzzle 88\end{tabular}}
+
+\end{frame}
+
+\end{document}
