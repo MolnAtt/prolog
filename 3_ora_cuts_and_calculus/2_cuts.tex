@@ -1,0 +1,438 @@
+\szakasz[Cut]{Cut}
+
+\begin{frame}[t]
+\frametitle{Cut}
+\vspace{.5cm}
+
+Prolog works with backtracing which can lead to inefficiency, i.e. wasting time and memory on possibilities that lead nowhere.
+\vspace{.5cm}
+
+We can control backtracking by the cut predicate: !/0
+\vspace{.5cm}
+
+Cut is a goal that always succeeds, so \prolog will always get through it.
+\vspace{.5cm}
+
+
+\ol{p(X):- b(X), c(X), d(X), e(X). }
+
+\begin{center}
+vs
+\end{center}
+
+\ol{p(X):- b(X), c(X), !, d(X), e(X). }
+
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Cut}
+\vspace{.5cm}
+
+The cut only commits us to choices made since the parent goal was unified with the \cemph{left-hand side} of the clause containing the cut.
+\vspace{.5cm}
+
+\ol{q:- p$_1$,\dots , p$_m$, !, r$_1$, \dots , r$_n$. }
+\vspace{.3cm}
+
+when we reach the cut it commits us:
+\begin{itemize}
+\item to this particular clause of \ol{q}
+\item to the choices made by \ol{p$_1$, \dots , p$_m$}
+\item \cemph{NOT} to choices made by \ol{r$_1$, \dots , r$_n$}
+\end{itemize}
+
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Green cut}
+
+Let's consider the following \ol{max/3} predicate:
+\vspace{.3cm}
+
+\ol{max(X,Y,Y):- X =< Y.}\\
+\ol{max(X,Y,X):- X > Y.}
+\vspace{1cm}
+\pause
+
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,3)}\\
+\pause
+\ol{yes}\\
+
+\ol{?- max(7,3,7)}\\
+\pause
+\ol{yes}
+\vspace{.1cm}
+\end{minipage}\right] $
+\pause
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,2)}\\
+\pause
+\ol{no}\\
+
+\ol{?- max(2,3,5)}\\
+\pause
+\ol{no}
+\vspace{.1cm}
+\end{minipage}\right] $
+\pause
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,Y)}\\
+\pause
+\ol{Y = 3}\\
+
+\ol{?- max(7,3,\_)}\\
+\pause
+\ol{true}
+\vspace{.1cm}
+\end{minipage}\right] $
+\vspace{1cm}
+\pause
+
+After \ol{?- max(2,3,Y)} if asked for more solutions, polog will try to satisfy the second clause, which is completely useless -- since we know the two clauses are exclusive (hence, it returns with \ol{false}).
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Green cut}
+
+We can fix this by adding a cut to the rule:
+\vspace{.5cm}
+
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X):- X > Y.}
+\vspace{.5cm}
+\pause
+
+Now
+\begin{itemize}
+\item If the \ol{X =< Y} \cemph{succeeds}, the cut commits us to this choice, and the \cemph{second clause} of \ol{max/3} is \cemph{not considered}.
+\item If the \ol{X =< Y} fails, Prolog goes on to the second clause.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{}
+
+
+\centering
+\begin{tikzpicture}
+\node[anchor = west] at (-3, 1.5){\textsc{Without cut}};
+\node[anchor = west] at (3, 1.5){\textsc{With cut}};
+\node[anchor = west] at (-3, 0.7){\ol{max(X,Y,Y):- X =< Y.}};
+\node[anchor = west] at (-3, 0.2){\ol{max(X,Y,X):- X > Y.}};
+\pause
+\node[overlay, anchor = north west] at (-3,-.3){\includegraphics[scale=.8]{1.png}};
+\pause
+\node[overlay, anchor = north west] at (-3,-3.3){\includegraphics[scale=.8]{2.png}};
+\pause
+\node[anchor = west] at (3, 0.7){\ol{max(X,Y,Y):- X =< Y, !.}};
+\node[anchor = west] at (3, 0.2){\ol{max(X,Y,X):- X > Y.}};
+\pause
+\node[overlay, anchor = north west] at (3,-.7){\includegraphics[scale=.8]{3.png}};
+\pause
+\node[overlay, anchor = north west] at (3,-3.3){\includegraphics[scale=.8]{4.png}};
+
+\end{tikzpicture}
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Green cut, red cut}
+
+\textsc{Green cut:} cuts that do not change the meaning of a predicate. \\
+E.g. \ol{max/3} -- the new code gives exactly the \bemph{same answers} as the old version, but it is \bemph{more efficient}.\\
+\vspace{.5cm}
+\pause
+
+To see how red cuts work, let's modify our \ol{max/3}:\\
+\vspace{.25cm}
+
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X):- X > Y.}
+\vspace{.7cm}
+
+The second clause is basically redundant. Let's remove it!
+\vspace{.25cm}
+
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X).}
+
+\vspace{.5cm}
+
+Now what?
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Red cut}
+
+\vspace{.5cm}
+
+
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X).}
+\vspace{.5cm}
+ \pause
+
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,X)}\\
+\pause
+\ol{X = 3}
+\vspace{.1cm}
+\end{minipage}\right] $
+\pause
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(4,3,X)}\\
+\pause\ol{X = 4}
+\vspace{.1cm}
+\end{minipage}\right] $
+\pause
+$\left[ \begin{minipage}{.27\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,2)}\\
+\pause
+\texttt{\textcolor{red}{true}}
+
+\vspace{.1cm}
+\end{minipage}\right] $
+\vspace{.5cm}
+\pause
+
+Now \prolog will be able to answer alternative questions/queries, but not yes-no ones.
+\vspace{.5cm}
+
+Because of the form of the query, it will go directly to the second clause, and only check \ol{max(X,Y,X).}, which is obviously true -- syntactically.
+
+
+
+
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Red cut}
+\vspace{.5cm}
+
+$\left[ \begin{minipage}{.45\textwidth}
+\vspace{.1cm}
+\ol{max(X,Y,Y):- X =< Y, !.}\\
+\ol{max(X,Y,X).}
+\vspace{.1cm}
+\end{minipage}\right] $
+$\left[ \begin{minipage}{.45\textwidth}
+\vspace{.1cm}
+\ol{?- max(2,3,2)}\\
+\texttt{\textcolor{red}{true}}
+\vspace{.1cm}
+\end{minipage}\right] $
+
+\vspace{.5cm}
+
+\dots however, we can patch it with a unification after the cut:
+\vspace{.25cm}
+
+\ol{max(X,Y,Z):- X =< Y, !, Y=Z.}\\
+\ol{max(X,Y,X).}
+\vspace{.5cm}
+\pause
+
+Mind the \ol{Z} in the head of the rule! This \ol{(X,Y,Z)} tempts \prolog to try to substitute in the first clause, since \ol{(X,Y,Z)} under appropriate circumstances can unify with \ol{(X,Y,X)}!
+\vspace{.25cm}
+\pause
+
+After \ol{X =< Y} (2 =< 3) succeeds, we ask if 3=2, which will be \cemph{false}.
+\vspace{.25cm}
+\pause
+
+Because of the \ol{!} \prolog cannot go back and try another setup for substitution (\ol{max(X,Y,X)}), it will be stuck with what was given before the \ol{!}.
+\vspace{.25cm}
+\pause
+
+However, if we ask \ol{max(4,3,X)}, it will be able to go to the second clause after failing with the first, since if fails already before the \ol{!}, at \ol{X =< Y}.
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Red cut}
+
+\vspace{.5cm}
+\textsc{Red cut:} a cut that changes the meaning of the predicate. If we remove it, we do not get an equivalent program.
+\vspace{1cm}
+\pause
+Using red cut the resulting program
+\begin{itemize}
+\item will not be fully declarative (we interfere with the control flow)
+\item can be harder to read
+\item might be prone to subtle programming mistakes
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Negation as Failure}
+\vspace{.2cm}
+
+Combining \ol{!, fail.} we can express \cemph{negation}:\\
+\vspace{.3cm}
+\pause
+
+\ol{burger(X):- bigMac(X).}\\
+\ol{burger(X):- bigKahunaBurger(X).}\\
+\ol{burger(X):- whopper(X).}
+\vspace{.25cm}
+\pause
+
+\ol{bigMac(a).}\\
+\ol{bigKahunaBurger(b).}\\
+\ol{bigMac(c).}\\
+\ol{whopper(d).}
+\vspace{.25cm}
+\pause
+
+\ol{enjoys(vincent,X):- bigKahunaBurger(X),!, fail.}\\
+\ol{enjoys(vincent,X):- burger(X).}
+\vspace{.4cm}
+\pause
+
+\ol{?- enjoys(vincent,a).}\\
+\pause
+\ol{true}
+\vspace{.25cm}
+\pause
+
+\ol{a} gets substituted in \ol{bugKahunaBurger(X)} where it will fail and go for the second clause. Among \ol{burger}s \ol{bigMac} is the first, so it succeeds, the query will be true.
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Negation as Failure}
+\vspace{.2cm}
+
+Combining \ol{!, fail.} we can express \cemph{negation}:\\
+\vspace{.3cm}
+
+\ol{burger(X):- bigMac(X).}\\
+\ol{burger(X):- bigKahunaBurger(X).}\\
+\ol{burger(X):- whopper(X).}
+\vspace{.25cm}
+
+\ol{bigMac(a).}\\
+\ol{bigKahunaBurger(b).}\\
+\ol{bigMac(c).}\\
+\ol{whopper(d).}
+\vspace{.25cm}
+
+\ol{enjoys(vincent,X):- bigKahunaBurger(X),!, fail.}\\
+\ol{enjoys(vincent,X):- burger(X).}
+\vspace{.3cm}
+
+\ol{?- enjoys(vincent,b).}\\
+\pause
+\ol{false}
+\vspace{.25cm}
+\pause
+
+Prolog tries to substitute \ol{b} in \ol{bigKahunaBurger(X)} in the first clause. It will succeed, since \ol{bigKahunaBurger(b).}, so it goes on, through \ol{!} all the way to \ol{fail}. Because of the \ol{!} \prolog cannot go back and look for other possible substitutions for \ol{b}\dots
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Negation as Failure}
+\vspace{.5cm}
+
+The cut-fail combination offers us some form of negation.
+\vspace{.3cm}
+
+It is called \cemph{negation as failure}, and defined as follows:
+\vspace{.35cm}
+
+\ol{neg(Goal):- Goal, !, fail.}\\
+\ol{neg(Goal).}
+\vspace{.2cm}
+
+\emph{If Goal succeeds, make the clause fail, otherwise let it go on.}
+\vspace{.5cm}
+
+Since negation as failure is frequently used in \prolog, there is a built-in predicate for it: \ol{$\setminus$+}
+
+
+\end{frame}
+
+
+\begin{frame}[t]
+\frametitle{Negation as Failure}
+\vspace{.5cm}
+
+3 equivalent expressions of the fact that \ol{vincent enjoys} all sorts of \ol{burger}s except for \ol{bigKahunaBurger}:
+\vspace{.4cm}
+
+\ol{enjoys(vincent,X):- bigKahunaBurger(X), !, fail.}\\
+\ol{enjoys(vincent,X):- burger(X).}
+\vspace{.3cm}
+
+\ol{enjoys(vincent,X):- burger(X), neg(bigKahunaBurger(X)).}\\
+\vspace{.3cm}
+
+\ol{enjoys(vincent,X):- burger(X), $\setminus$+bigKahunaBurger(X).}\\
+\vspace{1cm}
+
+
+Negation as failure is not a logical negation.
+\vspace{.2cm}
+
+After the \ol{!} we cannot go back, the program will fail.
+\vspace{.2cm}
+
+This is why we need to have \ol{burger(X)} before \ol{$\setminus$+}. We need to allow \prolog to freely select, substitute from our set of \ol{burger}s first.
+
+\end{frame}
+
+
+\szakasz[A trick with fail]{A trick with \ol{fail}}
+
+\begin{frame}[t]
+\frametitle{A trick with \ol{fail}}
+
+Let's say we want \prolog not only to give us a suggestion about what \ol{burger}s \ol{vincent} would like, but we want to be able to have a full list of these \ol{burger}s!
+\vspace{.25cm}
+\pause
+
+\ol{burger(X):- bigMac(X).}\\
+\ol{burger(X):- bigKahunaBurger(X).}\\
+\ol{burger(X):- whopper(X).}
+\vspace{.2cm}
+
+\ol{bigMac(a).}\\
+\ol{bigKahunaBurger(b).}\\
+\ol{bigMac(c).}\\
+\ol{whopper(d).}
+\vspace{.2cm}
+
+\ol{enjoys(vincent,X):- burger(X), $\setminus$+bigKahunaBurger(X).}\\
+\vspace{.2cm}
+\pause
+
+\ol{whattobuyto(Y):- enjoys(Y,X), write(X), nl, fail; true.}
+\vspace{.25cm}
+\pause
+
+Until there are \ol{burger}s that have never been tested, \ol{fail} will make \prolog going back to \ol{burger}s -- since \prolog backtracks locally. At the point where all the \ol{burger}s inthe KB have been checked, \prolog will go back to the main rule (\ol{whattobuyto}) to see if there are any other ways to save the day, e.g. a second clause\dots
+
+\end{frame}
+
+\end{document}

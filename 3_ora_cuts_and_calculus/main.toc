@@ -1,0 +1,2 @@
+\beamer@sectionintoc {1}{Cut}{2}{0}{1}
+\beamer@sectionintoc {2}{A trick with fail}{53}{0}{2}
